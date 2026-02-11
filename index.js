@@ -26,7 +26,7 @@ app.use('/api/channels', channelRoutes);
 app.use('/api/videos', videoRoutes);
 
 app.listen(4000, () => {
-    console.log(`Server is running on port ${PORT}`);
+    console.log("Server is running on port: 4000");
 });
 
 
