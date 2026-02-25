@@ -42,5 +42,8 @@ jobs:
     - name: Login Successful'
       run: echo "Logged in to Docker Hub successfully"
 
+    - name: Push Docker Image
+      run: docker push nehal524/youtube-backend:latest
+
 
   
