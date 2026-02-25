@@ -24,14 +24,12 @@ app.use('/api/users', userRoutes);
 app.use('/api/channels', channelRoutes);
 
 app.get('/', (req, res) => {
-    return res.status(200).json({ message: "Welcome to YouTube Backend API" });
+    return res.status(200).json({ message: "Welcome to YouTube Backend API 😂" });
 });
 //video routes
 app.use('/api/videos', videoRoutes);
 
-app.listen(PORT, () => {
-    console.log("Server is running on port: " + PORT);
-});
+app.listen(PORT, () => {console.log("Server is running on port: " + PORT);});
 
 
 //. http://localhost
