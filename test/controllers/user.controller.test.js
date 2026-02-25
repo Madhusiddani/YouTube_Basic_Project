@@ -2,8 +2,12 @@ const chai = require("chai");
 const sinon = require("sinon");
 const expect = chai.expect;
 
-const User = require("../../models/User.model");
-const { createUser, getUsers } = require("../../controllers/user.controller");
+// const User = require("../../models/User.model");
+// import User model
+const User = require("../../models/User.model")
+// const { createUser, getUsers } = require("../../controllers/user.controller");
+// import controller functions
+const {createUser, getUsers} = require("../../controllers/user.controller")
 
 describe("User Controller Tests", () => {
 
