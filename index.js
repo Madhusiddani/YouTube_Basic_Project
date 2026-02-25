@@ -22,11 +22,15 @@ app.use(express.json());
 app.use('/api/users', userRoutes);
 //channel routes
 app.use('/api/channels', channelRoutes);
+
+app.get('/', (req, res) => {
+    return res.status(200).json({ message: "Welcome to YouTube Backend API" });
+});
 //video routes
 app.use('/api/videos', videoRoutes);
 
-app.listen(4000, () => {
-    console.log("Server is running on port: 4000");
+app.listen(PORT, () => {
+    console.log("Server is running on port: " + PORT);
 });
 
 
