@@ -43,6 +43,6 @@ jobs:
       run: echo "Logged in to Docker Hub successfully"
 
     - name: Push the Docker Image
-      run:  docker push nehal524/youtube-backend:latest
+      run:  docker push madhusiddani/youtube-backend:latest
 
   

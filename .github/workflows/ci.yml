@@ -51,7 +51,15 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
         #actual commands
+    - name: Install Dependencies
+      run: npm install
 
     - name: Test Command
       run: echo "Testing APP"
+
+    - name: Run Tests
+      run: npm test
+
+    # - name : Test cases ran successfully
+    #   run: echo "Testing done successfully!"
 
