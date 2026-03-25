@@ -7,7 +7,7 @@ const publishVideo = async(req, res) => {
     try{
       const {title, description, channelId, category, tags} = req.body;
 
-      //create video 
+      //create video
 
       const video = new Video({
         title, description, channelId
