@@ -45,30 +45,7 @@ jobs:
     - name: Push Docker Image
       run: docker push nehal524/youtube-backend:latest
 
-  real-deploy:
-    needs: deploy
-    # server
-    runs-on: self-hosted
 
-    steps:
-    - name : Pull Docker Image
-      run: docker pull nehal524/youtube-backend:latest
-
-    - name: Cleanup old containers
-      run: |
-        docker rm -f youtube-backend || true
-        docker rm -f redis || true
-
-    - name: Run Redis Container
-      run: docker run -d --name redis redis
-
-    - name: Run Backend Container
-      run: |
-        docker run -d -p 4000:4000 \
-          --name youtube-backend \
-          --link redis:redis \
-          -e MONGO_URI=${{ secrets.MONGODB }} \
-          nehal524/youtube-backend:latest
 
 
 
