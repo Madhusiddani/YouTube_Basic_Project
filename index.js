@@ -29,7 +29,7 @@ app.use("/api", userRouter)
 app.use("/api/channel", channelRouter)
 
 app.get("/", (req, res) => {
-    return res.status(200).json({message : "Docker is working fine"})
+    return res.send("Welcome to YouTube Backend")
 })
 
 // video
