@@ -54,25 +54,24 @@ jobs:
     - name : Pull Docker Image
       run: docker pull nehal524/youtube-backend:latest
 
-# docker hub - 2367te346tr3t2ewyquert7yer
-    - name: Delete old container
-      run: docker rm -f youtube-backend
-
-    # - name: Run Docker Container
-    #   run: docker run -d -p 4000:4000 --name youtube-backend -e MONGO_URI=${{ secrets.MONGODB}} nehal524/youtube-backend:latest
-
-    - name: Stop old containers
-      run: docker compose down || true
-
-    - name: Install Docker Compose
+    - name: Cleanup old containers
       run: |
-       sudo curl -L "https://github.com/docker/compose/releases/download/v2.27.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-       sudo chmod +x /usr/local/bin/docker-compose
+        docker rm -f youtube-backend || true
+        docker rm -f redis || true
 
-    - name: Start services with Docker Compose
-      run: docker compose up -d
-      env:
-        MONGO_URI: ${{ secrets.MONGODB}}
+    - name: Run Redis Container
+      run: docker run -d --name redis redis
+
+    - name: Run Backend Container
+      run: |
+        docker run -d -p 4000:4000 \
+          --name youtube-backend \
+          --link redis:redis \
+          -e MONGO_URI=${{ secrets.MONGODB }} \
+          nehal524/youtube-backend:latest
+
+
+
 
 
 
