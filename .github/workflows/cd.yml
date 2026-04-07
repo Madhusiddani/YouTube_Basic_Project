@@ -62,12 +62,12 @@ jobs:
     #   run: docker run -d -p 4000:4000 --name youtube-backend -e MONGO_URI=${{ secrets.MONGODB}} nehal524/youtube-backend:latest
 
     - name: Stop old containers
-      run: docker-compose down || true
+      run: docker compose down || true
 
     - name: Start services with Docker Compose
-      run: docker-compose up -d
+      run: docker compose up -d
       env:
-        MONGO_URI: ${{ secrets.MONGODB }}
+        MONGO_URI: ${{ secrets.MONGODB}}
 
 
 
