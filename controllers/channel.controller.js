@@ -1,10 +1,10 @@
 const { default: mongoose } = require("mongoose");
 const Channel = require("../models/Channel.model");
 const User = require("../models/User.model");
+const axios = require("axios");
 // require redis
 
 const redis = require("../utils/redisClient");
-
 
 // api to create channel
 const createChannel = async (req, res) => {
@@ -96,6 +96,7 @@ const getAccountDetails = async (req, res) => {
 const getAllDetails = async(req, res) => {
   try{
      const {userId} = req.params;
+
 
      const data = await User.aggregate([
        // logic
@@ -191,9 +192,12 @@ const getAllDetails = async(req, res) => {
 
      ])
 
+
+
      return res.status(200).json({message : "All details fetched successfully", data})
   }catch(err){
     console.log("err", err)
+    return res.status(500).json({message: "Internal server error"})
   }
 }
 
@@ -288,6 +292,12 @@ const getAllDetails = async(req, res) => {
 //     res.status(500).json({ error: err.message });
 //   }
 // };
+
+//rate limiting
+
+
+
+
 
 
 module.exports = {createChannel, getAccountDetails, getAllDetails}

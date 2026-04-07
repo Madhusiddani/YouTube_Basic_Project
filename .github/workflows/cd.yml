@@ -45,5 +45,26 @@ jobs:
     - name: Push Docker Image
       run: docker push nehal524/youtube-backend:latest
 
+  real-deploy:
+    needs: deploy
+    # server
+    runs-on: self-hosted
+
+    steps:
+    - name : Pull Docker Image
+      run: docker pull nehal524/youtube-backend:latest
+
+# docker hub - 2367te346tr3t2ewyquert7yer
+    - name: Delete old container
+      run: docker rm -f youtube-backend
+
+    - name: Login Successful'
+      run: echo "Logged in to Docker Hub successfully"
+
+    - name: Run Docker Container
+      run: docker run -d -p 4000:4000 --name youtube-backend -e MONGO_URI=${{ secrets.MONGODB}} nehal524/youtube-backend:latest
+
+
+
 
   
