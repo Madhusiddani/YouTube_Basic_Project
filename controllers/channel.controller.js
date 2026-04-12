@@ -295,9 +295,35 @@ const getAllDetails = async(req, res) => {
 
 //rate limiting
 
+const getResultFromCbse = async(req, res) => {
+   try{
+ 
+   const {userId} = req.params; 
+
+   // limit
+   const key = `key:${userId}`; // key:87346iyqgetywer
+   const limit = 5; // 5 requests per user
+   const time_duration = 60; // seconds
+
+   // increase number of requests
+
+   const requests = await redis.incr(key);
+
+   // if number of requests are higher than the set limit
+   if(requests > limit){
+    return res.status(400).json(
+      {message : "Too Many Requests! Try again in sometime"})
+   }
+
+   return res.status(200).json(
+    {message : "Result fetched successfully",
+       data : {result : "Passed"}})
+
+   }catch(err){
+    console.log("err", err.message)
+   }
+}
 
 
-
-
-
-module.exports = {createChannel, getAccountDetails, getAllDetails}
+module.exports = {createChannel, getAccountDetails,
+   getAllDetails, getResultFromCbse}
