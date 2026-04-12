@@ -298,19 +298,23 @@ const getAllDetails = async(req, res) => {
 const getResultFromCbse = async(req, res) => {
    try{
  
-   const {userId} = req.params; 
+   const {userId} = req.params; // unique
 
    // limit
    const key = `key:${userId}`; // key:87346iyqgetywer
    const limit = 5; // 5 requests per user
-   const time_duration = 60; // seconds
+   const time_duration = 60; // 60 seconds
 
    // increase number of requests
 
-   const requests = await redis.incr(key);
+   const requests = await redis.incr(key); //  key:87346iyqgetywer -> 1, 60 seconds
+
+   // set the expiry
+
+   await redis.expire(key, time_duration)
 
    // if number of requests are higher than the set limit
-   if(requests > limit){
+   if(requests > limit){ // 1 > 5 = false
     return res.status(400).json(
       {message : "Too Many Requests! Try again in sometime"})
    }
