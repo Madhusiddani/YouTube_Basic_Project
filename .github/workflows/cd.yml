@@ -45,6 +45,38 @@ jobs:
     - name: Push Docker Image
       run: docker push nehal524/youtube-backend:latest
 
+    # job name
+  aws-deploy:
+
+    # server
+    needs: deploy
+    runs-on: self-hosted
+    # versions you want to test your app on
+    # strategy:
+    #   matrix:
+    #     node-version: [18.x, 20.x, 22.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+    steps:
+        # switch branch - (main)
+    - uses: actions/checkout@v4
+    # - name: Use Node.js ${{ matrix.node-version }}
+    #- uses: actions/setup-node@v4
+    #   with:
+    #     node-version: ${{ matrix.node-version }}
+    #     cache: 'npm'
+    #     # actual command
+    - name : pull latest docker image
+      run: docker pull nehal524/youtube-backend:latest .
+
+    - name: Remove exsisting container
+      run: docker rm -f yt_backend || true
+# docker hub - 2367te346tr3t2ewyquert7yer
+    - name: Run Redis inside container
+      run:  docker run -d --name redis redis:latest
+
+    - name: Run Docker Container for YT_Backend App
+      run: docker run -d --name yt-backend --link redis:redis -p 4000:4000 -e MONGO_URI="${{ secrets.MONGODB_URI }}" nehal524/youtube-backend:latest
+
 
 
 

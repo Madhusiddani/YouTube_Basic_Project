@@ -15,10 +15,21 @@ const app = express();
 
 app.use(express.json())
 
-mongoose.connect(process.env.MONGO_URI)
-.then(() => {
-  console.log("DB is connected")
-}).catch((err) => console.log("err", err.message))
+const mongoUri = process.env.MONGO_URI;
+
+if (!mongoUri) {
+  console.error("Missing MONGO_URI in .env");
+  process.exit(1);
+}
+
+mongoose.connect(mongoUri)
+  .then(() => {
+    console.log("DB is connected")
+  })
+  .catch((err) => {
+    console.error("MongoDB connection error:", err.message);
+    process.exit(1);
+  });
 
 // endpoints
 
